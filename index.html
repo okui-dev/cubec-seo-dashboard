@@ -1,5 +1,68 @@
-  <!DOCTYPE html>
-  <html><body>
-  <h1>SEO Dashboard - 準備中</h1>
-  <p>GitHub Actions で毎朝自動更新されます。</p>
-  </body></html>
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="UTF-8">
+<title>医学ノートSEO ダッシュボード (2026-05-24)</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fafafa;font-family:"Noto Sans JP",-apple-system,sans-serif;color:#4a4a4a;font-size:14px;line-height:1.7;letter-spacing:0.02em}
+.page{max-width:1080px;margin:24px auto;padding:36px 48px;background:#fff;box-shadow:0 2px 20px rgba(0,0,0,0.08)}
+.meta{color:#777;font-size:12px;margin-bottom:8px;letter-spacing:0.04em}
+h1{font-size:24px;font-weight:700;color:#1a1a1a;margin:0 0 8px;padding-bottom:14px;border-bottom:3px solid #083d7c}
+.subtitle{color:#777;font-size:13px;margin-bottom:24px}
+h2{font-size:18px;font-weight:700;color:#083d7c;margin:32px 0 14px;padding-bottom:6px;border-bottom:2px solid #f5773f}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:16px 0 24px}
+.card{background:#f0f4f9;border-left:4px solid #083d7c;padding:16px 20px;border-radius:0 6px 6px 0}
+.card .label{font-size:11px;color:#777;letter-spacing:0.05em;margin-bottom:6px}
+.card .value{font-size:28px;font-weight:700;color:#1a1a1a;line-height:1.2}
+.card .delta{font-size:12px;color:#083d7c;margin-top:6px}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:10px 0 22px}
+thead th{background:#083d7c;color:#fff;padding:8px 12px;text-align:left;font-weight:500;font-size:12px}
+thead th:first-child{border-radius:4px 0 0 0} thead th:last-child{border-radius:0 4px 0 0}
+tbody td{padding:8px 12px;border-bottom:1px solid #e0e0e0;color:#4a4a4a;vertical-align:middle}
+tbody tr:nth-child(even){background:#fafafa}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+td.date{font-variant-numeric:tabular-nums;color:#777}
+.dim{color:#bbb}
+.note{background:#f0f4f9;border-left:3px solid #083d7c;padding:10px 14px;margin:12px 0;border-radius:0 4px 4px 0;font-size:13px}
+.chart-wrap{background:#fafafa;border-radius:8px;padding:16px;margin:12px 0 22px}
+.footnote{color:#777;font-size:12px;margin-top:32px;padding-top:16px;border-top:1px solid #e0e0e0}
+</style></head>
+<body><div class="page">
+<div class="meta">2026-05-24 取得 · 元データ: gsc-data/2026-05-24/</div>
+<h1>医学ノートSEO ダッシュボード</h1>
+<div class="subtitle">対象: cubec-ai.com の /medical-notes/{id} 個別記事 / 社員(role=admin/cubec-user)除外</div>
+
+<h2>📅 週次推移 4指標(医学ノートSEO経由・社員除外)</h2>
+<div class="note"><strong>定義</strong>: 「未ログインで medical_note_detail_viewed を発火した distinct_id」をSEO経由として扱う。GSC指標は /medical-notes/{id} 個別ページに絞り、signup/認証はPostHogから社員(role=admin/cubec-user)除外で集計。<br><strong>表示ルール</strong>: 月曜開始で7日揃った週のみ表示。直近7日(ローリング)が直前週と4指標とも一致する場合は非表示。</div>
+<div class="chart-wrap"><canvas id="chart-weekly" height="200"></canvas></div>
+<table><thead><tr><th>期間</th><th>GSC表示</th><th>GSCクリック</th><th>signup(SEO経由)</th><th>🏆認証(KGI)</th></tr></thead><tbody><tr><td class="date">04-06</td><td class="num"><span class="dim">―</span></td><td class="num"><span class="dim">―</span></td><td class="num">0</td><td class="num">12</td></tr><tr><td class="date">04-13</td><td class="num"><span class="dim">―</span></td><td class="num"><span class="dim">―</span></td><td class="num">0</td><td class="num">7</td></tr><tr><td class="date">04-20</td><td class="num"><span class="dim">―</span></td><td class="num"><span class="dim">―</span></td><td class="num">0</td><td class="num">3</td></tr><tr><td class="date">04-27</td><td class="num">19</td><td class="num">0</td><td class="num">0</td><td class="num">6</td></tr><tr><td class="date">05-04</td><td class="num">650</td><td class="num">2</td><td class="num">0</td><td class="num">5</td></tr><tr><td class="date">05-11</td><td class="num">880</td><td class="num">6</td><td class="num">0</td><td class="num">4</td></tr><tr style="background:#fff8f3"><td class="date"><strong>直近7日(05-15〜05-21)</strong></td><td class="num">946</td><td class="num">5</td><td class="num">0</td><td class="num">0</td></tr></tbody></table>
+
+<h2>🔍 インデックス率</h2>
+<div class="cards">
+  <div class="card"><div class="label">GSC UI 実測 (2026-05-10 時点)</div><div class="value">29.1%</div><div class="delta">210 / 722 / 目標 80%</div></div>
+  <div class="card"><div class="label">URL検査サンプル</div><div class="value">0 / 0</div><div class="delta">検査済みURL中のindexed数</div></div>
+</div>
+
+<div class="footnote">GSC指標は /medical-notes/{id} 個別ページに絞込。signup/認証はPostHog（手動更新）。インデックス率はGSC UI実測値を手動反映。</div>
+
+<script>
+const weeklyData = [{"week": "2026-04-06", "label": "04-06", "impressions": 0, "clicks": 0, "signups": 0, "verifications": 12}, {"week": "2026-04-13", "label": "04-13", "impressions": 0, "clicks": 0, "signups": 0, "verifications": 7}, {"week": "2026-04-20", "label": "04-20", "impressions": 0, "clicks": 0, "signups": 0, "verifications": 3}, {"week": "2026-04-27", "label": "04-27", "impressions": 19, "clicks": 0, "signups": 0, "verifications": 6}, {"week": "2026-05-04", "label": "05-04", "impressions": 650, "clicks": 2, "signups": 0, "verifications": 5}, {"week": "2026-05-11", "label": "05-11", "impressions": 880, "clicks": 6, "signups": 0, "verifications": 4}, {"week": "trailing7d", "label": "直近7日(05-15〜05-21)", "impressions": 946, "clicks": 5, "signups": 0, "verifications": 0, "is_trailing": true}];
+new Chart(document.getElementById('chart-weekly'), {
+  type: 'line',
+  data: {
+    labels: weeklyData.map(w => w.label),
+    datasets: [
+      {label:'GSC表示', data: weeklyData.map(w => w.impressions || null), borderColor:'#083d7c', backgroundColor:'rgba(8,61,124,0.1)', tension:0.3, yAxisID:'y', spanGaps:true},
+      {label:'GSCクリック', data: weeklyData.map(w => w.clicks || null), borderColor:'#f5773f', backgroundColor:'rgba(245,119,63,0.1)', tension:0.3, yAxisID:'y1', spanGaps:true},
+      {label:'signup', data: weeklyData.map(w => w.signups), borderColor:'#0a8a44', backgroundColor:'rgba(10,138,68,0.1)', tension:0.3, yAxisID:'y1'},
+      {label:'🏆認証(KGI)', data: weeklyData.map(w => w.verifications), borderColor:'#c43d3d', backgroundColor:'rgba(196,61,61,0.1)', tension:0.3, yAxisID:'y1', borderWidth:3},
+    ]
+  },
+  options: {
+    plugins:{title:{display:true,text:'週次推移: 表示・クリック・signup・認証'}},
+    scales:{y:{position:'left',title:{display:true,text:'GSC表示'},beginAtZero:true}, y1:{position:'right',title:{display:true,text:'クリック/signup/認証'},grid:{drawOnChartArea:false},beginAtZero:true}}
+  }
+});
+</script>
+</div></body></html>
