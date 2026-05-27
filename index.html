@@ -36,32 +36,51 @@ td.date{font-variant-numeric:tabular-nums;color:#777}
 <h2>📅 週次推移 4指標(医学ノートSEO経由・社員除外)</h2>
 <div class="note"><strong>定義</strong>: SEO経由＝「未登録で医学ノート個別ページ(/medical-notes/{id})を閲覧し、その後 user_signup_success した医師」。person_idで匿名→登録を縫合し、最初の閲覧が最初の登録より前の person を起点とする(時系列判定)。社員(role=admin/cubec-user)除外。signupは登録週、🏆認証(KGI)は同じSEO起点者の doctor_verification_completed を認証週で集計。GSC指標は /medical-notes/{id} 個別ページに絞込。<br><strong>表示ルール</strong>: 月曜開始で7日揃った週のみ表示。直近7日(ローリング)が直前週と4指標とも一致する場合は非表示。</div>
 <div class="chart-wrap"><canvas id="chart-weekly" height="200"></canvas></div>
-<table><thead><tr><th>期間</th><th>GSC表示</th><th>GSCクリック</th><th>signup(SEO経由)</th><th>🏆認証(KGI)</th></tr></thead><tbody><tr><td class="date">04-06</td><td class="num"><span class="dim">―</span></td><td class="num"><span class="dim">―</span></td><td class="num">1</td><td class="num">0</td></tr><tr><td class="date">04-13</td><td class="num"><span class="dim">―</span></td><td class="num"><span class="dim">―</span></td><td class="num">0</td><td class="num">0</td></tr><tr><td class="date">04-20</td><td class="num"><span class="dim">―</span></td><td class="num"><span class="dim">―</span></td><td class="num">1</td><td class="num">0</td></tr><tr><td class="date">04-27</td><td class="num">19</td><td class="num">0</td><td class="num">5</td><td class="num">1</td></tr><tr><td class="date">05-04</td><td class="num">650</td><td class="num">2</td><td class="num">5</td><td class="num">1</td></tr><tr><td class="date">05-11</td><td class="num">880</td><td class="num">6</td><td class="num">2</td><td class="num">1</td></tr><tr><td class="date">05-18</td><td class="num">1,010</td><td class="num">5</td><td class="num">2</td><td class="num">1</td></tr></tbody></table>
+<table><thead><tr><th>期間</th><th>GSC表示</th><th>GSCクリック</th><th>signup(SEO経由)</th><th>🏆認証(KGI)</th></tr></thead><tbody><tr><td class="date">4/6–4/12</td><td class="num"><span class="dim">―</span></td><td class="num"><span class="dim">―</span></td><td class="num">1</td><td class="num">0</td></tr><tr><td class="date">4/13–4/19</td><td class="num"><span class="dim">―</span></td><td class="num"><span class="dim">―</span></td><td class="num">0</td><td class="num">0</td></tr><tr><td class="date">4/20–4/26</td><td class="num"><span class="dim">―</span></td><td class="num"><span class="dim">―</span></td><td class="num">1</td><td class="num">0</td></tr><tr><td class="date">4/27–5/3</td><td class="num">19</td><td class="num">0</td><td class="num">5</td><td class="num">1</td></tr><tr><td class="date">5/4–5/10</td><td class="num">650</td><td class="num">2</td><td class="num">5</td><td class="num">1</td></tr><tr><td class="date">5/11–5/17</td><td class="num">880</td><td class="num">6</td><td class="num">2</td><td class="num">1</td></tr><tr><td class="date">5/18–5/24</td><td class="num">1,010</td><td class="num">5</td><td class="num">2</td><td class="num">1</td></tr><tr style="background:#fff8f3"><td class="date"><strong>直近7日 5/20–5/26</strong></td><td class="num">907</td><td class="num">4</td><td class="num">2</td><td class="num">0</td></tr></tbody></table>
 
 <h2>🔍 インデックス率</h2>
 <div class="cards">
-  <div class="card"><div class="label">GSC UI 実測 (2026-05-10 時点)</div><div class="value">29.1%</div><div class="delta">210 / 722 / 目標 80%</div></div>
-  <div class="card"><div class="label">URL検査サンプル</div><div class="value">0 / 0</div><div class="delta">検査済みURL中のindexed数</div></div>
+  <div class="card"><div class="label">インデックス率 (2026-05-27 自動取得)</div><div class="value">66.1%</div><div class="delta">381 / 576 判定済 (sitemap 691) / 目標 80%</div></div>
+  <div class="card"><div class="label">内訳 (sitemap全件 URL Inspection)</div><div class="value" style="font-size:18px">クロール待ち 174 / 除外 21</div><div class="delta">未判定 115件（一過性・翌日再取得で解消）</div></div>
 </div>
 
-<div class="footnote">GSC指標は /medical-notes/{id} 個別ページに絞込。signup/認証はPostHogから person_id縫合・時系列判定で自動集計（fetch_posthog_weekly.py）。インデックス率はGSC UI実測値を手動反映。</div>
+<div class="footnote">GSC指標は /medical-notes/{id} 個別ページに絞込（dataState=all で直近速報値含む）。signup/認証はPostHogから person_id縫合・時系列判定で自動集計（fetch_posthog_weekly.py）。インデックス率は sitemap全ノートを URL Inspection API で毎日自動判定（fetch-index-rate.py）。</div>
 
 <script>
-const weeklyData = [{"week": "2026-04-06", "label": "04-06", "impressions": 0, "clicks": 0, "signups": 1, "verifications": 0}, {"week": "2026-04-13", "label": "04-13", "impressions": 0, "clicks": 0, "signups": 0, "verifications": 0}, {"week": "2026-04-20", "label": "04-20", "impressions": 0, "clicks": 0, "signups": 1, "verifications": 0}, {"week": "2026-04-27", "label": "04-27", "impressions": 19, "clicks": 0, "signups": 5, "verifications": 1}, {"week": "2026-05-04", "label": "05-04", "impressions": 650, "clicks": 2, "signups": 5, "verifications": 1}, {"week": "2026-05-11", "label": "05-11", "impressions": 880, "clicks": 6, "signups": 2, "verifications": 1}, {"week": "2026-05-18", "label": "05-18", "impressions": 1010, "clicks": 5, "signups": 2, "verifications": 1}];
+const weeklyData = [{"week": "2026-04-06", "label": "4/6–4/12", "impressions": 0, "clicks": 0, "signups": 1, "verifications": 0}, {"week": "2026-04-13", "label": "4/13–4/19", "impressions": 0, "clicks": 0, "signups": 0, "verifications": 0}, {"week": "2026-04-20", "label": "4/20–4/26", "impressions": 0, "clicks": 0, "signups": 1, "verifications": 0}, {"week": "2026-04-27", "label": "4/27–5/3", "impressions": 19, "clicks": 0, "signups": 5, "verifications": 1}, {"week": "2026-05-04", "label": "5/4–5/10", "impressions": 650, "clicks": 2, "signups": 5, "verifications": 1}, {"week": "2026-05-11", "label": "5/11–5/17", "impressions": 880, "clicks": 6, "signups": 2, "verifications": 1}, {"week": "2026-05-18", "label": "5/18–5/24", "impressions": 1010, "clicks": 5, "signups": 2, "verifications": 1}, {"week": "trailing7d", "label": "直近7日 5/20–5/26", "impressions": 907, "clicks": 4, "signups": 2, "verifications": 0, "is_trailing": true}];
+const trailingIdx = weeklyData.findIndex(w => w.is_trailing);
+// トレーリング点(直近7日ローリング=速報)は淡色で識別。確定週は濃色。
+const barFill = (full, faint) => weeklyData.map((w,i) => i === trailingIdx ? faint : full);
 new Chart(document.getElementById('chart-weekly'), {
-  type: 'line',
   data: {
     labels: weeklyData.map(w => w.label),
     datasets: [
-      {label:'GSC表示', data: weeklyData.map(w => w.impressions || null), borderColor:'#083d7c', backgroundColor:'rgba(8,61,124,0.1)', tension:0.3, yAxisID:'y', spanGaps:true},
-      {label:'GSCクリック', data: weeklyData.map(w => w.clicks || null), borderColor:'#f5773f', backgroundColor:'rgba(245,119,63,0.1)', tension:0.3, yAxisID:'y1', spanGaps:true},
-      {label:'signup', data: weeklyData.map(w => w.signups), borderColor:'#0a8a44', backgroundColor:'rgba(10,138,68,0.1)', tension:0.3, yAxisID:'y1'},
-      {label:'🏆認証(KGI)', data: weeklyData.map(w => w.verifications), borderColor:'#c43d3d', backgroundColor:'rgba(196,61,61,0.1)', tension:0.3, yAxisID:'y1', borderWidth:3},
+      // 棒グラフ（右軸 y1）: クリック / signup / 認証
+      {type:'bar', label:'GSCクリック', data: weeklyData.map(w => w.impressions>0 ? w.clicks : null),
+       backgroundColor: barFill('rgba(245,119,63,0.85)','rgba(245,119,63,0.35)'), yAxisID:'y1', order:2},
+      {type:'bar', label:'signup', data: weeklyData.map(w => w.signups),
+       backgroundColor: barFill('rgba(10,138,68,0.85)','rgba(10,138,68,0.35)'), yAxisID:'y1', order:2},
+      {type:'bar', label:'🏆認証(KGI)', data: weeklyData.map(w => w.verifications),
+       backgroundColor: barFill('rgba(196,61,61,0.9)','rgba(196,61,61,0.4)'), yAxisID:'y1', order:2},
+      // 折れ線（左軸 y）: GSC表示。トレーリングへ向かう区間は点線（速報）
+      {type:'line', label:'GSC表示', data: weeklyData.map(w => w.impressions || null),
+       borderColor:'#083d7c', backgroundColor:'rgba(8,61,124,0.08)', borderWidth:2.5, tension:0.3,
+       yAxisID:'y', order:0, spanGaps:true, fill:false,
+       pointRadius: weeklyData.map((w,i) => i === trailingIdx ? 6 : 3),
+       pointStyle: weeklyData.map((w,i) => i === trailingIdx ? 'rectRot' : 'circle'),
+       segment:{borderDash: ctx => ctx.p1DataIndex === trailingIdx ? [6,4] : undefined}},
     ]
   },
   options: {
-    plugins:{title:{display:true,text:'週次推移: 表示・クリック・signup・認証'}},
-    scales:{y:{position:'left',title:{display:true,text:'GSC表示'},beginAtZero:true}, y1:{position:'right',title:{display:true,text:'クリック/signup/認証'},grid:{drawOnChartArea:false},beginAtZero:true}}
+    interaction:{mode:'index', intersect:false},
+    plugins:{
+      title:{display:true,text:'週次推移: GSC表示(折れ線) / クリック・signup・認証(棒) ※末尾は直近7日ローリング'},
+      legend:{position:'top'}
+    },
+    scales:{
+      y:{position:'left',title:{display:true,text:'GSC表示'},beginAtZero:true},
+      y1:{position:'right',title:{display:true,text:'クリック / signup / 認証'},grid:{drawOnChartArea:false},beginAtZero:true,ticks:{precision:0}}
+    }
   }
 });
 </script>
