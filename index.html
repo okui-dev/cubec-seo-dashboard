@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja"><head><meta charset="UTF-8">
-<title>医学ノートSEO ダッシュボード (2026-06-02)</title>
+<title>医学ノートSEO ダッシュボード (2026-06-03)</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
 <style>
@@ -29,14 +29,26 @@ td.date{font-variant-numeric:tabular-nums;color:#777}
 .footnote{color:#777;font-size:12px;margin-top:32px;padding-top:16px;border-top:1px solid #e0e0e0}
 </style></head>
 <body><div class="page">
-<div class="meta">2026-06-02 取得 · 元データ: gsc-data/2026-06-02/</div>
+<div class="meta">2026-06-03 取得 · 元データ: gsc-data/2026-06-03/</div>
 <h1>医学ノートSEO ダッシュボード</h1>
 <div class="subtitle">対象: cubec-ai.com の /medical-notes/{id} 個別記事 / 社員(role=admin/cubec-user)除外</div>
 
 <h2>📅 週次推移 5指標(医学ノートSEO経由・社員除外)</h2>
-<div class="note"><strong>定義</strong>: <strong>未登録閲覧UU</strong>＝medical_note_detail_viewedイベント発生時点で user_signup_success を未だ発火していない person のユニーク数(閲覧週で集計)。GSCクリックでは捕捉できないSNS/AI引用/直接URLの未登録流入も含む。<br><strong>SEO経由</strong>＝「未登録で医学ノート個別ページ(/medical-notes/{id})を閲覧し、その後 user_signup_success した医師」。person_idで匿名→登録を縫合し、最初の閲覧が最初の登録より前の person を起点とする(時系列判定)。signupは登録週、🏆認証(KGI)は同じSEO起点者の doctor_verification_completed を認証週で集計。社員(role=admin/cubec-user)は全指標で除外。GSC指標は /medical-notes/{id} 個別ページに絞込。<br><strong>包含関係</strong>: 未登録閲覧UU ⊇ SEO起点者(③signup ⊆ ②閲覧UU)。同一週で見ると ③ > ② もあり得る(閲覧週とsignup週がまたぐ場合)。<br><strong>表示ルール</strong>: 月曜開始で7日揃った週のみ表示。直近7日(ローリング)が直前週と5指標とも一致する場合は非表示。</div>
+<div class="note"><strong>⚠️ 指標は3次元の軸が違うため「上段≥下段」は保証されない</strong>:
+<ul style="margin:6px 0 8px 18px;padding:0;font-size:12.5px">
+<li><strong>GSC表示/クリック</strong>: GSC(Google検索のみ)経由の表示・クリック「<u>回数</u>」。<u>全ユーザー</u>対象(既登録医師含む)</li>
+<li><strong>未登録閲覧数(PV)</strong>: PostHog `medical_note_detail_viewed` の「<u>回数</u>」。<u>未登録状態のpersonのみ</u>対象、<u>全流入経路</u>(GSC/SNS/AI/直接URL)含む。同一人の複数回閲覧は複数回カウント</li>
+<li><strong>signup/認証</strong>: SEO起点者(未登録閲覧後に登録した医師)の「<u>人数</u>」。signupは<u>登録週</u>、認証は<u>認証週</u>で集計</li>
+</ul>
+<strong>典型的な逆転事例</strong>:
+<ul style="margin:6px 0 8px 18px;padding:0;font-size:12.5px">
+<li><strong>clicks > 閲覧数</strong>: 既登録医師の再クリックが clicks に入り、閲覧数では除外される(既登録医師の方が記事リピート率高い)</li>
+<li><strong>閲覧数 < signup</strong>: 閲覧週とsignup週がまたぐ人は別週に1ずつ立つ。例: 5/3閲覧→5/10 signupの人は閲覧週(4/27-5/3)に閲覧+1、signup週(5/4-5/10)に signup+1</li>
+</ul>
+<strong>SEO経由の定義</strong>: 「未登録で /medical-notes/{id} を閲覧し、その後 user_signup_success した医師」。person_idで匿名→登録を縫合し、最初の閲覧が最初の登録より前の person を起点とする(時系列判定)。社員(role=admin/cubec-user)は全指標で除外。GSC指標は /medical-notes/{id} 個別ページに絞込。<br>
+<strong>表示ルール</strong>: 月曜開始で7日揃った週のみ表示。直近7日(ローリング)が直前週と5指標とも一致する場合は非表示。</div>
 <div class="chart-wrap"><canvas id="chart-weekly" height="200"></canvas></div>
-<table><thead><tr><th>期間</th><th>GSC表示</th><th>GSCクリック</th><th>未登録閲覧UU</th><th>signup(SEO経由)</th><th>🏆認証(KGI)</th></tr></thead><tbody><tr><td class="date">4/6–4/12</td><td class="num"><span class="dim">―</span></td><td class="num"><span class="dim">―</span></td><td class="num">2</td><td class="num">1</td><td class="num">0</td></tr><tr><td class="date">4/13–4/19</td><td class="num"><span class="dim">―</span></td><td class="num"><span class="dim">―</span></td><td class="num">1</td><td class="num">0</td><td class="num">0</td></tr><tr><td class="date">4/20–4/26</td><td class="num"><span class="dim">―</span></td><td class="num"><span class="dim">―</span></td><td class="num">3</td><td class="num">1</td><td class="num">0</td></tr><tr><td class="date">4/27–5/3</td><td class="num">10</td><td class="num">0</td><td class="num">6</td><td class="num">5</td><td class="num">1</td></tr><tr><td class="date">5/4–5/10</td><td class="num">650</td><td class="num">2</td><td class="num">6</td><td class="num">5</td><td class="num">1</td></tr><tr><td class="date">5/11–5/17</td><td class="num">880</td><td class="num">6</td><td class="num">1</td><td class="num">2</td><td class="num">1</td></tr><tr><td class="date">5/18–5/24</td><td class="num">1,010</td><td class="num">5</td><td class="num">3</td><td class="num">2</td><td class="num">1</td></tr><tr><td class="date">5/25–5/31</td><td class="num">903</td><td class="num">3</td><td class="num">2</td><td class="num">2</td><td class="num">0</td></tr><tr style="background:#fff8f3"><td class="date"><strong>直近7日 5/26–6/1</strong></td><td class="num">926</td><td class="num">3</td><td class="num">3</td><td class="num">3</td><td class="num">0</td></tr></tbody></table>
+<table><thead><tr><th>期間</th><th>GSC表示</th><th>GSCクリック</th><th>未登録閲覧数</th><th>signup(SEO経由)</th><th>🏆認証(KGI)</th></tr></thead><tbody><tr><td class="date">4/6–4/12</td><td class="num"><span class="dim">―</span></td><td class="num"><span class="dim">―</span></td><td class="num">3</td><td class="num">1</td><td class="num">0</td></tr><tr><td class="date">4/13–4/19</td><td class="num"><span class="dim">―</span></td><td class="num"><span class="dim">―</span></td><td class="num">12</td><td class="num">0</td><td class="num">0</td></tr><tr><td class="date">4/20–4/26</td><td class="num"><span class="dim">―</span></td><td class="num"><span class="dim">―</span></td><td class="num">11</td><td class="num">1</td><td class="num">0</td></tr><tr><td class="date">4/27–5/3</td><td class="num"><span class="dim">―</span></td><td class="num"><span class="dim">―</span></td><td class="num">17</td><td class="num">5</td><td class="num">1</td></tr><tr><td class="date">5/4–5/10</td><td class="num">650</td><td class="num">2</td><td class="num">8</td><td class="num">5</td><td class="num">1</td></tr><tr><td class="date">5/11–5/17</td><td class="num">880</td><td class="num">6</td><td class="num">2</td><td class="num">2</td><td class="num">1</td></tr><tr><td class="date">5/18–5/24</td><td class="num">1,010</td><td class="num">5</td><td class="num">10</td><td class="num">2</td><td class="num">1</td></tr><tr><td class="date">5/25–5/31</td><td class="num">904</td><td class="num">3</td><td class="num">4</td><td class="num">2</td><td class="num">0</td></tr><tr style="background:#fff8f3"><td class="date"><strong>直近7日 5/27–6/2</strong></td><td class="num">891</td><td class="num">2</td><td class="num">3</td><td class="num">3</td><td class="num">0</td></tr></tbody></table>
 
 <h2>🔍 インデックス率</h2>
 <div class="cards">
@@ -44,10 +56,10 @@ td.date{font-variant-numeric:tabular-nums;color:#777}
   <div class="card"><div class="label">内訳 (sitemap全件 URL Inspection)</div><div class="value" style="font-size:18px">クロール待ち 211 / 除外 30</div><div class="delta">未判定 0件（一過性・翌日再取得で解消）</div></div>
 </div>
 
-<div class="footnote">GSC指標は /medical-notes/{id} 個別ページに絞込（dataState=all で直近速報値含む）。未登録閲覧UU/signup/認証はPostHogから person_id縫合・時系列判定で自動集計（fetch_posthog_weekly.py）。インデックス率は sitemap全ノートを URL Inspection API で毎日自動判定（fetch-index-rate.py）。</div>
+<div class="footnote">GSC指標は /medical-notes/{id} 個別ページに絞込（dataState=all で直近速報値含む）。未登録閲覧数(PV)/signup/認証はPostHogから person_id縫合・時系列判定で自動集計（fetch_posthog_weekly.py）。インデックス率は sitemap全ノートを URL Inspection API で毎日自動判定（fetch-index-rate.py）。</div>
 
 <script>
-const weeklyData = [{"week": "2026-04-06", "label": "4/6–4/12", "impressions": 0, "clicks": 0, "unreg_views": 2, "signups": 1, "verifications": 0}, {"week": "2026-04-13", "label": "4/13–4/19", "impressions": 0, "clicks": 0, "unreg_views": 1, "signups": 0, "verifications": 0}, {"week": "2026-04-20", "label": "4/20–4/26", "impressions": 0, "clicks": 0, "unreg_views": 3, "signups": 1, "verifications": 0}, {"week": "2026-04-27", "label": "4/27–5/3", "impressions": 10, "clicks": 0, "unreg_views": 6, "signups": 5, "verifications": 1}, {"week": "2026-05-04", "label": "5/4–5/10", "impressions": 650, "clicks": 2, "unreg_views": 6, "signups": 5, "verifications": 1}, {"week": "2026-05-11", "label": "5/11–5/17", "impressions": 880, "clicks": 6, "unreg_views": 1, "signups": 2, "verifications": 1}, {"week": "2026-05-18", "label": "5/18–5/24", "impressions": 1010, "clicks": 5, "unreg_views": 3, "signups": 2, "verifications": 1}, {"week": "2026-05-25", "label": "5/25–5/31", "impressions": 903, "clicks": 3, "unreg_views": 2, "signups": 2, "verifications": 0}, {"week": "trailing7d", "label": "直近7日 5/26–6/1", "impressions": 926, "clicks": 3, "unreg_views": 3, "signups": 3, "verifications": 0, "is_trailing": true}];
+const weeklyData = [{"week": "2026-04-06", "label": "4/6–4/12", "impressions": 0, "clicks": 0, "unreg_pv": 3, "signups": 1, "verifications": 0}, {"week": "2026-04-13", "label": "4/13–4/19", "impressions": 0, "clicks": 0, "unreg_pv": 12, "signups": 0, "verifications": 0}, {"week": "2026-04-20", "label": "4/20–4/26", "impressions": 0, "clicks": 0, "unreg_pv": 11, "signups": 1, "verifications": 0}, {"week": "2026-04-27", "label": "4/27–5/3", "impressions": 0, "clicks": 0, "unreg_pv": 17, "signups": 5, "verifications": 1}, {"week": "2026-05-04", "label": "5/4–5/10", "impressions": 650, "clicks": 2, "unreg_pv": 8, "signups": 5, "verifications": 1}, {"week": "2026-05-11", "label": "5/11–5/17", "impressions": 880, "clicks": 6, "unreg_pv": 2, "signups": 2, "verifications": 1}, {"week": "2026-05-18", "label": "5/18–5/24", "impressions": 1010, "clicks": 5, "unreg_pv": 10, "signups": 2, "verifications": 1}, {"week": "2026-05-25", "label": "5/25–5/31", "impressions": 904, "clicks": 3, "unreg_pv": 4, "signups": 2, "verifications": 0}, {"week": "trailing7d", "label": "直近7日 5/27–6/2", "impressions": 891, "clicks": 2, "unreg_pv": 3, "signups": 3, "verifications": 0, "is_trailing": true}];
 const trailingIdx = weeklyData.findIndex(w => w.is_trailing);
 // トレーリング点(直近7日ローリング=速報)は淡色で識別。確定週は濃色。
 const barFill = (full, faint) => weeklyData.map((w,i) => i === trailingIdx ? faint : full);
@@ -55,10 +67,10 @@ new Chart(document.getElementById('chart-weekly'), {
   data: {
     labels: weeklyData.map(w => w.label),
     datasets: [
-      // 棒グラフ（右軸 y1）: クリック / 未登録閲覧UU / signup / 認証 ※ファネル順
+      // 棒グラフ（右軸 y1）: クリック / 未登録閲覧数 / signup / 認証 ※ファネル順
       {type:'bar', label:'GSCクリック', data: weeklyData.map(w => w.impressions>0 ? w.clicks : null),
        backgroundColor: barFill('rgba(245,119,63,0.85)','rgba(245,119,63,0.35)'), yAxisID:'y1', order:2},
-      {type:'bar', label:'未登録閲覧UU', data: weeklyData.map(w => w.unreg_views),
+      {type:'bar', label:'未登録閲覧数', data: weeklyData.map(w => w.unreg_pv),
        backgroundColor: barFill('rgba(8,61,124,0.55)','rgba(8,61,124,0.25)'), yAxisID:'y1', order:2},
       {type:'bar', label:'signup', data: weeklyData.map(w => w.signups),
        backgroundColor: barFill('rgba(10,138,68,0.85)','rgba(10,138,68,0.35)'), yAxisID:'y1', order:2},
@@ -76,12 +88,12 @@ new Chart(document.getElementById('chart-weekly'), {
   options: {
     interaction:{mode:'index', intersect:false},
     plugins:{
-      title:{display:true,text:'週次推移: GSC表示(折れ線) / クリック・閲覧UU・signup・認証(棒) ※末尾は直近7日ローリング'},
+      title:{display:true,text:'週次推移: GSC表示(折れ線) / クリック・閲覧数・signup・認証(棒) ※末尾は直近7日ローリング'},
       legend:{position:'top'}
     },
     scales:{
       y:{position:'left',title:{display:true,text:'GSC表示'},beginAtZero:true},
-      y1:{position:'right',title:{display:true,text:'クリック / 閲覧UU / signup / 認証'},grid:{drawOnChartArea:false},beginAtZero:true,ticks:{precision:0}}
+      y1:{position:'right',title:{display:true,text:'クリック / 閲覧数 / signup / 認証'},grid:{drawOnChartArea:false},beginAtZero:true,ticks:{precision:0}}
     }
   }
 });
